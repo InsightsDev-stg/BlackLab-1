@@ -23,7 +23,6 @@ after_failure:
  -  rm  "jacoco.exec"
 
 after_success:
-
  -  wget --content-disposition http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.7.6.201602180812/jacoco-0.7.6.201602180812.zip
  -  unzip -o jacoco-0.7.6.201602180812.zip 
  -  cd lib  
@@ -33,6 +32,6 @@ after_success:
  -  cd $PWD
  -  rm  "jacoco.exec"
  -  export JAVA_TOOL_OPTIONS=-javaagent:$PWD/jacocoagent.jar=destfile=$PWD/jacoco.exec  
- -  travis_wait  mvn test -Dmaven.clover.skip=true -Dmaven.javadoc.skip=true -Drat.skip=true -Drat.ignoreErrors=true test-compile -Dgpg.skip=true  
+ -  travis_wait 90 mvn test  -Djacoco.skip=true -Dcobertura.skip=true -Dmaven.clover.skip=true -Dmaven.javadoc.skip=true -Drat.skip=true -Drat.ignoreErrors=true clean verify
  -  cd ${PWD} 
  -  find . -name '*.exec'
