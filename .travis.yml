@@ -11,8 +11,8 @@ addons:
     - jacoco.exec
     
 after_success:
- -  wget --content-disposition http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.7.6.201602180812/jacoco-0.7.6.201602180812.zip
- -  unzip -o jacoco-0.7.6.201602180812.zip 
+ -  wget --content-disposition http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.7.7.201606060606/jacoco-0.7.7.201606060606.zip
+ -  unzip -o jacoco-0.7.7.201606060606.zip 
  -  cd lib  
  -  mv * ../ 
  -  cd .. 
