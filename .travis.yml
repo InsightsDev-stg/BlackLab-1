@@ -22,8 +22,8 @@ addons:
 after_failure:
  -  file="jacoco.exec"
  -  if [ -f $file ] ; then
- 	   rm $file
- 	   echo "delete because of build failure"
+ -     rm $file
+ -  	 echo "delete because of build failure"
  -  fi 
 
 after_success:
@@ -36,9 +36,10 @@ after_success:
  -  chmod a+x * 
  -  cd $PWD
  -  file="jacoco.exec"
+ -  file="jacoco.exec"
  -  if [ -f $file ] ; then
- 	   rm $file
- 	   echo "previous jacoco file deleted"
+ -     rm $file
+ -  	 echo "delete because of build failure"
  -  fi 
  -  export JAVA_TOOL_OPTIONS=-javaagent:$PWD/jacocoagent.jar=destfile=$PWD/jacoco.exec  
  -  travis_wait  mvn test -Dmaven.clover.skip=true -Dmaven.javadoc.skip=true -Drat.skip=true -Drat.ignoreErrors=true test-compile -Dgpg.skip=true  
