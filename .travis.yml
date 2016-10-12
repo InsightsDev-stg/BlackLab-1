@@ -10,15 +10,37 @@ addons:
     - testbuild.zip
     - jacoco.exec
     
+addons:
+  artifacts:
+    debug: true
+    paths:
+    - libs.zip
+    - build.zip
+    - testbuild.zip
+    - jacoco.exec
+
+after_failure:
+ -  file="jacoco.exec"
+ -  if [ -f $file ] ; then
+ 	   rm $file
+ 	   echo "delete because of build failure"
+ -  fi 
+
 after_success:
- -  wget --content-disposition http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.7.7.201606060606/jacoco-0.7.7.201606060606.zip
- -  unzip -o jacoco-0.7.7.201606060606.zip 
+
+ -  wget --content-disposition http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.7.6.201602180812/jacoco-0.7.6.201602180812.zip
+ -  unzip -o jacoco-0.7.6.201602180812.zip 
  -  cd lib  
  -  mv * ../ 
  -  cd .. 
  -  chmod a+x * 
- -  cd $PWD 
+ -  cd $PWD
+ -  file="jacoco.exec"
+ -  if [ -f $file ] ; then
+ 	   rm $file
+ 	   echo "previous jacoco file deleted"
+ -  fi 
  -  export JAVA_TOOL_OPTIONS=-javaagent:$PWD/jacocoagent.jar=destfile=$PWD/jacoco.exec  
- -  travis_wait 60 mvn test -Dmaven.clover.skip=true -Dmaven.javadoc.skip=true -Drat.skip=true -Drat.ignoreErrors=true test-compile -Dgpg.skip=true  
+ -  travis_wait  mvn test -Dmaven.clover.skip=true -Dmaven.javadoc.skip=true -Drat.skip=true -Drat.ignoreErrors=true test-compile -Dgpg.skip=true  
  -  cd ${PWD} 
  -  find . -name '*.exec'
